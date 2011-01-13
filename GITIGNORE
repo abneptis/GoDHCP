@@ -1,0 +1,4 @@
+# Symlink this file to .GITIGNORE to use the repo default.
+.gitignore
+*.6
+_*
