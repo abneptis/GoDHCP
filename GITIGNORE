@@ -1,4 +1,6 @@
 # Symlink this file to .GITIGNORE to use the repo default.
 .gitignore
-*.6
+*.[68]
 _*
+[68].out
+clientd
