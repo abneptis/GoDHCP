@@ -1,0 +1,14 @@
+package dhcp
+
+// Used by DHCP option  OPTDHCP_MESSAGE_TYPE
+const (
+  DHCPUNSPEC   byte = iota
+  DHCPDISCOVER
+  DHCPOFFER
+  DHCPREQUEST
+  DHCPDECLINE
+  DHCPACK
+  DHCPNAK
+  DHCPRELEASE
+)
+
