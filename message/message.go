@@ -150,6 +150,17 @@ func (self Message)OptionBytes(tag byte)(out []byte, err os.Error){
   return
 }
 
+func (self *Message)SetDHCPMessageType(in byte){
+  for i := range(self.Options){
+    if self.Options[i].OptionType() == DHCPOPT_MESSAGE_TYPE {
+      self.Options[i] = NewOption(DHCPOPT_MESSAGE_TYPE, []byte{in})
+      return
+    }
+  }
+  self.Options = append(self.Options, NewOption(DHCPOPT_MESSAGE_TYPE, []byte{in}))
+  return
+}
+
 func (self Message)DHCPMessageType()(out byte, err os.Error){
   outb, err := self.OptionBytes(DHCPOPT_MESSAGE_TYPE)
   if err == nil {
