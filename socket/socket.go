@@ -3,10 +3,8 @@ package dhcp
 import "net"
 import "os"
 
-type SocketV4 struct {
+type dhcp4Socket struct {
   sock *net.UDPConn
-  hardwareType byte
-  hardwareAddr [16]byte
 }
 
 
@@ -25,25 +23,22 @@ func bind(ifname, bindaddr string)(c *net.UDPConn, err os.Error){
   return
 }
 
-func NewSocketV4(ifname string, ht byte , ha []byte)(c *SocketV4, err os.Error){
-  c = &SocketV4{ hardwareType: ht }
-  switch ht {
-    case ETHERNET:
-      copy(c.hardwareAddr[0:6], ha[0:6])
-    default:
-      err = os.NewError("Can't handle hardware type -- care to send a patch?")
-  }
+func newDhcp4Socket(ifname string)(c *dhcp4Socket, err os.Error){
+  c = &dhcp4Socket{}
   if err == nil {
     c.sock, err = bind(ifname, "0.0.0.0:68")
   }
   return
 }
 
-func (self *SocketV4)WriteMessage(msg *Message, src net.IP)(err os.Error){
+func (self *dhcp4Socket)WriteMessage(msg *Message, src net.IP)(err os.Error){
   err = WriteMessage(self.sock, msg, src)
   return
 }
-func (self *SocketV4)ReadMessage()(*Message, net.Addr, os.Error){
+func (self *dhcp4Socket)ReadMessage()(*Message, net.Addr, os.Error){
   return ReadMessage(self.sock)
 }
 
+func (self *dhcp4Socket)Close()(os.Error){
+  return self.sock.Close()
+}
