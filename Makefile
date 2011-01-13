@@ -10,9 +10,7 @@ GOFILES=\
         message/dhcp_message_types.go\
         message/dhcp_option_types.go\
 	socket/socket.go\
-	client/acceptor.go\
-	client/simple_handler.go\
-	client/selector.go\
+	agent/finder.go\
 
 include $(GOROOT)/src/Make.pkg
 
