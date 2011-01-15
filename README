@@ -2,8 +2,6 @@
 
   It IS capable of parsing most basic DHCP(v4) messages, and might be usable to others either as a reference or as it improves.
 
-  It makes no attempt to parse vendor options or extended options (fields in the old bootp headers), though the latter is planned
-and the former could probably be accomplished using the exisisting toolset.
+  It makes no attempt to parse vendor options or extended options (fields in the old bootp headers), though the latter is planned and the former could probably be accomplished using the exisisting toolset.
 
-  It makes no attempt to persist after a single query or handle renewals, and instead exposes a low-level messaging interface
-that can be used by more complex agents.
+  It makes no attempt to persist after a single query or handle renewals, and instead exposes a low-level messaging interface that can be used by more complex agents.
