@@ -2,12 +2,23 @@ package main
 
 import "dhcp"
 import "log"
+import "flag"
+import "fmt"
 import "json"
 
 func main(){
-  af, err := dhcp.NewDHCP4Finder("br0")
+  ifname := flag.String("if","eth0","Interface to use")
+  ifaddr := flag.String("mac","00:01:de:ad:be:ef","Mac to use ")
+  flag.Parse()
+
+  af, err := dhcp.NewDHCP4Finder(*ifname)
   if err != nil {
     log.Exitf("Cannot create finder for interface: %v", err)
+  }
+  mac := [6]byte{}
+  _, err = fmt.Sscanf(*ifaddr, "%x:%x:%x:%x:%x:%x", &mac[0], &mac[1], &mac[2], &mac[3], &mac[4], &mac[5])
+  if err != nil {
+    log.Exitf("Cannot parse mac: %v", err)
   }
   offers := dhcp.AddressFinderResponse{}
   accepted := dhcp.Message{}
@@ -15,7 +26,7 @@ func main(){
     Timeout: 5000000000,
     MaximumOffers: 1,
     IfType: dhcp.ETHERNET,
-    IfAddr: []byte{0,0x90,0xf5,0x9c,0x8e,0xf1},
+    IfAddr: mac[0:6],
   }, &offers)
   if err != nil {
     log.Exitf("Problem receiving offers: %v", err)
