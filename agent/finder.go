@@ -1,7 +1,6 @@
 package dhcp
 
 import "net"
-import "json"
 import "os"
 import "sync"
 import "time"
@@ -103,7 +102,6 @@ func (self *dhcpFinder)AcceptOffer(req *AddressAcceptRequest, resp *Message)(err
     // default to 15 Seconds.
     req.Timeout = 15*1000000000
   }
-  json.NewEncoder(os.Stdout).Encode(req.Offer)
   err = self.sock.sock.SetWriteTimeout(req.Timeout)
   if err != nil { return }
   err = self.sock.WriteMessage(&req.Offer, net.IPv4bcast)
