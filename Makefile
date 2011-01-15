@@ -15,8 +15,3 @@ GOFILES=\
 include $(GOROOT)/src/Make.pkg
 
 
-clientd.$(O): daemons/dhclient.go install
-	$(GC) -o $@ $<
-
-clientd: clientd.$(O)
-	$(LD) -o $@ $<
